@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wheel_strategy/pages/home.dart';
 
 void main() {
   runApp(
-    MaterialApp(
-      home: HomePage(),
+    const ProviderScope(
+      child: MaterialApp(
+        home: HomePage(),
+      ),
     ),
   );
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
 }
