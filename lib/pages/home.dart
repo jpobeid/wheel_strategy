@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wheel_strategy/classes/stock.dart';
+import 'package:wheel_strategy/widgets/create_dialog.dart';
 
 final stockProvider = StateProvider<List<Map<String, Object>>>((ref) => []);
 
@@ -22,6 +23,12 @@ class HomePage extends ConsumerWidget {
                 (e) => Card(
                   child: ListTile(
                     title: Text(e['name'].toString()),
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () {
+                        print('deleting...');
+                      },
+                    ),
                   ),
                 ),
               )
@@ -29,9 +36,11 @@ class HomePage extends ConsumerWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Stock stock = Stock(name: 'jblu', phase: 4);
-            stock.phase = 5;
-            print(stock);
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return CreateDialog();
+                });
           },
           child: const Icon(Icons.add),
         ),
