@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wheel_strategy/classes/stock.dart';
 
 final stockProvider = StateProvider<List<Map<String, Object>>>((ref) => []);
 
@@ -28,13 +29,9 @@ class HomePage extends ConsumerWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Map<String, Object> toAdd = {
-              'name': 'jblu',
-              'phase': 4,
-            };
-            ref
-                .read(stockProvider.notifier)
-                .update((state) => [...state, toAdd]);
+            Stock stock = Stock(name: 'jblu', phase: 4);
+            stock.phase = 5;
+            print(stock);
           },
           child: const Icon(Icons.add),
         ),
