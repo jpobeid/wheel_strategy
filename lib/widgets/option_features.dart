@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class TableCC extends StatelessWidget {
+class OptionParameters extends StatelessWidget {
   final bool isCoveredCall;
   final TextEditingController controllerContracts;
   final TextEditingController controllerCost;
   final TextEditingController controllerStrike;
   final TextEditingController controllerPremium;
 
-  const TableCC({
+  const OptionParameters({
     super.key,
     required this.isCoveredCall,
     required this.controllerContracts,

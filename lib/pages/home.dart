@@ -1,46 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wheel_strategy/classes/stock.dart';
-import 'package:wheel_strategy/widgets/create_dialog.dart';
+import 'package:wheel_strategy/pages/create_stock.dart';
+import 'package:wheel_strategy/widgets/stock_card.dart';
 
-final stockProvider = StateProvider<List<Map<String, Object>>>((ref) => []);
+final stockCardsProvider = StateProvider<List<StockCard>>((ref) => []);
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<Map<String, Object>> stockList = ref.watch(stockProvider);
+    final List<StockCard> stockCards = ref.watch(stockCardsProvider);
 
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Home'),
+          backgroundColor: Colors.blue,
         ),
         body: ListView(
-          children: stockList
-              .map(
-                (e) => Card(
-                  child: ListTile(
-                    title: Text(e['name'].toString()),
-                    trailing: IconButton(
-                      icon: Icon(Icons.delete),
-                      onPressed: () {
-                        print('deleting...');
-                      },
-                    ),
-                  ),
-                ),
-              )
-              .toList(),
+          children: stockCards,
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return CreateDialog();
-                });
+          onPressed: () async {
+            Stock? newStock = await Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const CreateStockPage()),
+            );
+            if (newStock != null) {
+              ref
+                  .read(stockCardsProvider.notifier)
+                  .update((state) => [...state, StockCard(stock: newStock)]);
+            }
           },
           child: const Icon(Icons.add),
         ),

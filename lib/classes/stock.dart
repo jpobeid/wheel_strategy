@@ -1,6 +1,7 @@
 class Stock {
   final String name;
   int phase;
+  final DateTime dateOpen;
   final DateTime dateExpiration;
   final int nContracts;
   final double strike;
@@ -10,6 +11,7 @@ class Stock {
   Stock({
     required this.name,
     required this.phase,
+    required this.dateOpen,
     required this.dateExpiration,
     required this.nContracts,
     required this.strike,
