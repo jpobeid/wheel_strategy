@@ -4,14 +4,16 @@ import 'package:wheel_strategy/classes/stock.dart';
 import 'package:wheel_strategy/pages/create_stock.dart';
 import 'package:wheel_strategy/widgets/stock_card.dart';
 
-final stockCardsProvider = StateProvider<List<StockCard>>((ref) => []);
+import '../widgets/wheel_painter.dart';
+
+final stocksProvider = StateProvider<List<Stock>>((ref) => []);
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<StockCard> stockCards = ref.watch(stockCardsProvider);
+    final List<Stock> stocks = ref.watch(stocksProvider);
 
     return SafeArea(
       child: Scaffold(
@@ -20,7 +22,7 @@ class HomePage extends ConsumerWidget {
           backgroundColor: Colors.blue,
         ),
         body: ListView(
-          children: stockCards,
+          children: stocks.map((e) => StockCard(stock: e)).toList(),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
@@ -29,8 +31,8 @@ class HomePage extends ConsumerWidget {
             );
             if (newStock != null) {
               ref
-                  .read(stockCardsProvider.notifier)
-                  .update((state) => [...state, StockCard(stock: newStock)]);
+                  .read(stocksProvider.notifier)
+                  .update((state) => [...state, newStock]);
             }
           },
           child: const Icon(Icons.add),
